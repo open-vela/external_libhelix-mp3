@@ -16,7 +16,7 @@
 
 menu "Helix MPEG Audio Decoder"
 
-config CODEC_HELIXMP3
+config LIB_HELIX_MP3
 	bool "The Helix MPEG AUDIO Library"
 	default n
 	---help---
