@@ -419,34 +419,11 @@ static __inline Word64 SAR64(Word64 x, int n) {
 #elif defined(__GNUC__) && defined(ARM)
 
 #if defined(ARM7DI)
-	
-typedef long long Word64;
 
 static __inline int MULSHIFT32(int x, int y) {
 	return x * y;
 }
 
-static __inline Word64 SAR64(Word64 x, int n) {
-	return x >>= n;
-}
-
-
-typedef union _U64 {
-	Word64 w64;
-	struct {
-		/* x86 = little endian */
-		unsigned int lo32;
-		signed int   hi32;
-	} r;
-} U64;
-
-static __inline Word64 MADD64(Word64 sum64, int x, int y)
-{
-	sum64 += (Word64)x * (Word64)y;
-
-	return sum64;
-}
-	
 #else
 
 static __inline int MULSHIFT32(int x, int y)
@@ -468,6 +445,29 @@ static __inline int MULSHIFT32(int x, int y)
 }
 
 #endif
+
+typedef long long Word64;
+
+
+static __inline Word64 SAR64(Word64 x, int n) {
+	return x >>= n;
+}
+
+typedef union _U64 {
+	Word64 w64;
+	struct {
+		/* x86 = little endian */
+		unsigned int lo32;
+		signed int   hi32;
+	} r;
+} U64;
+
+static __inline Word64 MADD64(Word64 sum64, int x, int y)
+{
+	sum64 += (Word64)x * (Word64)y;
+
+	return sum64;
+}
 
 static __inline int FASTABS(int x) 
 {
